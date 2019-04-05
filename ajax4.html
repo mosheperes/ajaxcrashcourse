@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax 4 -Ajax And PHP Forms</title>
+</head>
+<body>
+<button id="button">Get Name</button>
+
+<h1>GET Form</h1>
+<form action="process.php" method="get">
+    <input type="text" name="name">
+    <input type="submit" value="Submit">
+</form>
+
+<h1>Ajax GET Form</h1>
+<form id="getform">
+    <input type="text" name="name" id="name1">
+    <input type="submit" value="Submit">
+</form>
+
+<h1>POST GET Form</h1>
+<form method="post" action="process.php">
+    <input type="text" name="name">
+    <input type="submit" value="Submit">
+</form>
+
+<h1>Ajax POST Form</h1>
+<form id="postform">
+    <input type="text" name="name" id="name2">
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    document.getElementById('button').addEventListener('click',getname);
+
+    document.getElementById('getform').addEventListener('submit',getname);
+
+    document.getElementById('postform').addEventListener('submit',postname);
+
+    function postname(e){
+
+        e.preventDefault();
+
+        var name = document.getElementById('name2').value;
+            var params= "name=" + name;
+        xhr = new XMLHttpRequest();
+
+        xhr.open('POST','process.php',true);
+        xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+        xhr.onload=function () {
+            console.log(this.responseText);
+        }
+
+        xhr.send(params);
+    }
+
+    function getname(e){
+
+        e.preventDefault();
+
+        var name = document.getElementById('name1').value;
+
+        xhr = new XMLHttpRequest();
+        
+        xhr.open('GET','process.php?name=' + name,true);
+        
+        xhr.onload=function () {
+            console.log(this.responseText);
+        }
+
+        xhr.send();
+    }
+</script>
+</body>
+</html>
